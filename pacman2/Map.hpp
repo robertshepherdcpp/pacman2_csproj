@@ -14,15 +14,27 @@ struct Map {
         std::ifstream file("grid.txt");
         std::vector<std::string> lines{};
         std::string line;
-        while (file >> line) {
+        while (std::getline(file, line)) {
             lines.push_back(line);
         }
-        // now we find the longest line in the vector
-        int largest = -1;
-        for (auto& i : lines) {
-            largest = i.size() > largest ? i.size() : largest;
+        // this stage works.
+        /*std::cout << "got the lines from the grid:\n";
+        for (const auto line : lines) {
+            std::cout << line << ", ";
         }
-        // now we can actually create the grid
+        std::cout << "\n";*/
+
+        // now we find the longest line in the vector
+        int largest = 0;
+        for (auto& i : lines) {
+            std::cout << "size of i: " << i.size() << "\n";
+            std::cout << "is i greather than largest, i: " << i.size() << ", largest: " << largest << ", the result: " << (i.size() > largest) << "\n";
+            if (i.size() > largest) {
+                largest = i.size();
+            }
+        }
+        std::cout << "the longest line: " << largest << "\n";
+        //// now we can actually create the grid
         std::vector<std::vector<char>> vec{};
         for (int i = 0; i < lines.size(); i++) {
             std::vector<char> temp{};
@@ -36,7 +48,17 @@ struct Map {
             }
             vec.push_back(temp);
         }
+        std::cout << "printing the grid:\n";
+        for (const auto v : vec) {
+            std::cout << "{";
+            for (const char x : v) {
+                std::cout << x << ",";
+            }
+            std::cout << "}";
+        }
         m_grid = vec;
+
+        std::cout << "\nall good setting up the grid\n";
 	}
 
     auto get_map() -> std::vector<std::vector<char>>* {
@@ -46,7 +68,7 @@ struct Map {
     // to draw the sprites of the grid. here we wont be drawing pacman and the ghosts though, they will act on their own.
     auto draw(sf::RenderWindow& rw) -> void {
         for (int i = 0; i < m_grid.size(); i++) {
-            for (int j = 0; j < m_grid[0].size(); i++) {
+            for (int j = 0; j < m_grid[0].size(); j++) {
                 // here the i is the y value (the amount of rows)
                 sf::Vector2f pos = sf::Vector2f(20 * j, 20 * i);
                 if (m_grid[i][j] == '#') {

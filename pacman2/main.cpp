@@ -25,11 +25,16 @@ int main()
 
     Map m("./grid.txt", wall, blank, energy, special_token);
 
+    sf::Sprite test(wall); test.setPosition(sf::Vector2f(20, 20));
+
     // the last time point, so we can use it for updates.
     std::chrono::system_clock::time_point last = std::chrono::system_clock::now();
 
     // after how many seconds do we update the characters i.e. move them (every 0.1 seconds)
     auto update_interval = std::chrono::milliseconds(10);
+
+    // only print the grid once.
+    int count = 0;
 
     // the main game loop
     while (window.isOpen())
@@ -69,7 +74,7 @@ int main()
         // every update interval update the entities.
         if (std::chrono::system_clock::now() - last > update_interval) {
             p.update();
-            last = std::chrono::system_clock::now();
+      
         }
 
         window.clear();
@@ -77,7 +82,9 @@ int main()
         // print the pacman sprite
         p.draw(window);
         if (std::chrono::system_clock::now() - last > update_interval) {
-            //m.draw(window);
+            m.draw(window);
+            count += 1;
+            last = std::chrono::system_clock::now();
         }
 
         window.display();
