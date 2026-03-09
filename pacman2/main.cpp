@@ -74,18 +74,17 @@ int main()
         // every update interval update the entities.
         if (std::chrono::system_clock::now() - last > update_interval) {
             p.update();
+            last = std::chrono::system_clock::now();
       
         }
 
-        window.clear();
+        //window.clear();
 
         // print the pacman sprite
+        //window.draw(test);
+        m.draw(window);
         p.draw(window);
-        if (std::chrono::system_clock::now() - last > update_interval) {
-            m.draw(window);
-            count += 1;
-            last = std::chrono::system_clock::now();
-        }
+        
 
         window.display();
     }

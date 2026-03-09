@@ -67,32 +67,34 @@ struct Map {
 
     // to draw the sprites of the grid. here we wont be drawing pacman and the ghosts though, they will act on their own.
     auto draw(sf::RenderWindow& rw) -> void {
-        for (int i = 0; i < m_grid.size(); i++) {
-            for (int j = 0; j < m_grid[0].size(); j++) {
-                // here the i is the y value (the amount of rows)
-                sf::Vector2f pos = sf::Vector2f(20 * j, 20 * i);
-                if (m_grid[i][j] == '#') {
-                    blank.setPosition(pos);
-                    rw.draw(blank);
-                    std::cout << "printing a wall\n";
-                }
-                else if (m_grid[i][j] == '.') {
-                    energy.setPosition(pos);
-                    rw.draw(energy);
-                    std::cout << "printing an energy token\n";
-                }
-                else if (m_grid[i][j] == 'o') {
-                    special_token.setPosition(pos);
-                    rw.draw(energy);
-                    std::cout << "printing an extra energy token\n";
-                }
-                else {
-                    blank.setPosition(pos);
-                    rw.draw(blank);
-                    std::cout << "printing a blank space\n";
-                }
-            }
-        }
+        //for (int i = 0; i < m_grid.size(); i++) {
+        //    for (int j = 0; j < m_grid[0].size(); j++) {
+        //        // here the i is the y value (the amount of rows)
+        //        sf::Vector2f pos = sf::Vector2f(20 * j, 20 * i);
+        //        if (m_grid[i][j] == '#') {
+        //            wall.setPosition(pos);
+        //            rw.draw(wall);
+        //            std::cout << "printing a wall\n";
+        //        }
+        //        else if (m_grid[i][j] == '.') {
+        //            energy.setPosition(pos);
+        //            rw.draw(energy);
+        //            std::cout << "printing an energy token\n";
+        //        }
+        //        else if (m_grid[i][j] == 'o') {
+        //            special_token.setPosition(pos);
+        //            rw.draw(energy);
+        //            std::cout << "printing an extra energy token\n";
+        //        }
+        //        else {
+        //            blank.setPosition(pos);
+        //            rw.draw(blank);
+        //            std::cout << "printing a blank space\n";
+        //        }
+        //    }
+        //}
+        wall.setPosition(sf::Vector2f(60, 60));
+        rw.draw(wall);
     }
 private:
     std::vector<std::vector<char>> m_grid{};
