@@ -73,7 +73,7 @@ int main()
 
         // every update interval update the entities.
         if (std::chrono::system_clock::now() - last > update_interval) {
-            p.update();
+            p.update(m.get_map());
             last = std::chrono::system_clock::now();
       
         }

@@ -16,16 +16,61 @@ struct Pacman {
 		rw.draw(pm_sp);
 	}
 
-	auto update() {
-		std::cout << pm_sp.getPosition().x << ", " << pm_sp.getPosition().y << "\n";
-		if (to_move) {
-			if ((int(pm_sp.getPosition().x) % 20 == 0) and (int(pm_sp.getPosition().y) % 20 == 0)) {
+	auto update(std::vector<std::vector<char>>* vec) {
+		//std::cout << pm_sp.getPosition().x << ", " << pm_sp.getPosition().y << "\n";
+		if ((int(pm_sp.getPosition().x) % 20 == 0) and (int(pm_sp.getPosition().y) % 20 == 0)) {
+			auto cpy = dir;
+			if (to_move) {
 				dir = directions[move_to];
 				to_move = false;
 			}
+			// update the positions (this is for the grid to check if we have collided with a wall.
+			position.first = pm_sp.getPosition().x / 20;
+			position.second = pm_sp.getPosition().y / 20;
+		}
+		// we need to check before we do this move that its actually possible to do so i.e. we wont be going over the bounds
+		auto pos = pm_sp.getPosition();
+		pos.x += float(dir.first);
+		pos.y += float(dir.second);
+
+		// if the position is out of bounds
+		if (pos.x < 0 or pos.x > 640) {
+			// then we would make the pacman go to the other side
+			if (pos.x < 0) {
+				pos.x = 640;
+			}
+			if (pos.x > 640) {
+				pos.x = 0;
+			}
+			pm_sp.setPosition(pos);
+		}
+		else { // the position is in bounds.
+			char val = (*vec)[int(pos.x / 20)][int(pos.y / 20)];
+			if (val == '#') {
+				// then we cant move anymore we just stay as is.
+			}
+			else if (val == '.') {
+				// then we have got to consume this token. we still move the player
+				// TODO: actually consume the token
+				pm_sp.setPosition(pos);
+			}
+			else if (val == 'o') {
+				// then we have a special token - the one that allows to ghosts to become edible. we still move the player
+				// TODO: actually consume the token
+				pm_sp.setPosition(pos);
+			}
+			else if (val == ' ') {
+				// then nothing, we just move.
+				pm_sp.setPosition(pos);
+			}
+			else if (val == 'A' or val == 'B' or val == 'C' or val == 'D') {
+				// then we have hit a ghost.
+				// TODO actually do something with the collision with the ghost.
+				pm_sp.setPosition(pos);
+			}
 		}
 
-		pm_sp.move(sf::Vector2f(float(dir.first), float(dir.second)));
+
 	}
 
 	auto move_up() {  
@@ -79,4 +124,6 @@ private:
 
 	bool to_move = false;
 	std::string move_to{};
+
+	std::pair<int, int> position{12, 12};
 };
