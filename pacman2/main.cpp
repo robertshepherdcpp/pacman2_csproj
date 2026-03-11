@@ -33,8 +33,8 @@ int main()
     // after how many seconds do we update the characters i.e. move them (every 0.1 seconds)
     auto update_interval = std::chrono::milliseconds(10);
 
-    // only print the grid once.
-    int count = 0;
+    //// only print the grid once.
+    //int count = 0;
 
     // the main game loop
     while (window.isOpen())

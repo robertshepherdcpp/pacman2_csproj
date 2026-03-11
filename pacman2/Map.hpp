@@ -93,8 +93,25 @@ struct Map {
         //        }
         //    }
         //}
-        wall.setPosition(sf::Vector2f(60, 60));
-        rw.draw(wall);
+        /*wall.setPosition(sf::Vector2f(60, 60));
+        rw.draw(wall);*/
+
+        for (int i = 0; i < m_grid.size(); i++) {
+            for (int j = 0; j < m_grid[0].size(); j++) {
+                if (m_grid[i][j] == '#') {
+                    wall.setPosition(sf::Vector2f(j * 20, i * 20));
+                    rw.draw(wall);
+                }
+                else if (m_grid[i][j] == '.') {
+                    energy.setPosition(sf::Vector2f(j * 20, i * 20));
+                    rw.draw(energy);
+                }
+                else if (m_grid[i][j] == 'o') {
+                    special_token.setPosition(sf::Vector2f(j * 20, i * 20));
+                    rw.draw(special_token);
+                }
+            }
+        }
     }
 private:
     std::vector<std::vector<char>> m_grid{};
