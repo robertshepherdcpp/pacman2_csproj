@@ -46,10 +46,40 @@ struct Pacman {
 		}
 		else { // the position is in bounds.
 			//std::cout << "attempting to access position: " << int(pos.x / 20) << ", " << int(pos.y / 20) << "\n";
-			char val = (*vec)[int(pos.y / 20)][int(pos.x / 20)];
+			// char val = (*vec)[int(pos.y / 20)][int(pos.x / 20)];
+			// we have to calculate which cell its actually moving into
+			auto d = dir;
+			int x_coord{}; int y_coord{};
+			if (int(pos.y) % 20 == 0 and int(pos.x) % 20 == 0) {
+				y_coord = int(pos.y / 20);
+				x_coord = int(pos.x / 20);
+			} else {
+				if (d == directions["left"]) {
+					// this means that the position will simply be same y value, but the x value will just be the rounded down
+					y_coord = int(pos.y / 20);
+					x_coord = int(pos.x / 20);
+				}
+				else if (d == directions["right"]) {
+					// this means the y pos is the same, x value will be the x value rounded down + 1
+					y_coord = int(pos.y / 20);
+					x_coord = int(pos.x / 20 + 1);
+				}
+				else if (d == directions["down"]) {
+					// x coord is the same, y value will be the y value rounded down
+					y_coord = int(pos.y / 20 + 1);
+					x_coord = int(pos.x / 20);
+				}
+				else if (d == directions["up"]) {
+					// the y coord is the same, y value will be the y value rounded down + 1
+					y_coord = int(pos.y / 20);
+					x_coord = int(pos.x / 20);
+				}
+			}
+			char val = (*vec)[y_coord][x_coord];
 			if (val == '#') {
 				// then we cant move anymore we just stay as is.
-				pm_sp.setPosition(pos);
+				//pm_sp.setPosition(pos);
+
 			}
 			else if (val == '.') {
 				// then we have got to consume this token. we still move the player
