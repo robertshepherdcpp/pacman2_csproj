@@ -83,12 +83,18 @@ struct Pacman {
 			}
 			else if (val == '.') {
 				// then we have got to consume this token. we still move the player
-				// TODO: actually consume the token
+				score += 1;
+				(*vec)[y_coord][x_coord] = ' ';
+
 				pm_sp.setPosition(pos);
 			}
 			else if (val == 'o') {
 				// then we have a special token - the one that allows to ghosts to become edible. we still move the player
-				// TODO: actually consume the token
+				score += 10;
+				(*vec)[y_coord][x_coord] = ' ';
+
+				// TODO: actually handle eating it, like change the ghost's state.
+
 				pm_sp.setPosition(pos);
 			}
 			else if (val == ' ') {
@@ -156,4 +162,6 @@ private:
 	std::string move_to{};
 
 	std::pair<int, int> position{12, 12};
+
+	int score = 0;
 };
