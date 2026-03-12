@@ -48,12 +48,15 @@ inline auto shortest_path(Map& m, std::pair<int, int> start, std::pair<int, int>
 	}
 
 	// we have got to our value now we need to retrace
-	std::vector<std::pair<int, int>> moves{};
+	std::vector<std::pair<int, int>> moves{to};
 	auto curr = to;
-	while (curr != from) {
-
+	while (curr != start) {
+		curr = parent[curr];
+		moves.push_back(curr);
 	}
+	std::reverse(moves.begin(), moves.end());
 
+	res = moves;
 
 	return res;
 }
