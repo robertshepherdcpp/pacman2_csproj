@@ -43,6 +43,7 @@ struct Pacman {
 				pos.x = 0;
 			}
 			pm_sp.setPosition(pos);
+			position = { int(pos.x) / 20, int(pos.y) / 20 };
 		}
 		else { // the position is in bounds.
 			//std::cout << "attempting to access position: " << int(pos.x / 20) << ", " << int(pos.y / 20) << "\n";
@@ -87,6 +88,7 @@ struct Pacman {
 				(*vec)[y_coord][x_coord] = ' ';
 
 				pm_sp.setPosition(pos);
+				position = { x_coord, y_coord };
 			}
 			else if (val == 'o') {
 				// then we have a special token - the one that allows to ghosts to become edible. we still move the player
@@ -96,15 +98,21 @@ struct Pacman {
 				// TODO: actually handle eating it, like change the ghost's state.
 
 				pm_sp.setPosition(pos);
+
+				position = { x_coord, y_coord };
 			}
 			else if (val == ' ') {
 				// then nothing, we just move.
 				pm_sp.setPosition(pos);
+
+				position = { x_coord, y_coord };
 			}
 			else if (val == 'A' or val == 'B' or val == 'C' or val == 'D' or val == 'P') {
 				// then we have hit a ghost.
 				// TODO actually do something with the collision with the ghost.
 				pm_sp.setPosition(pos);
+
+				position = { x_coord, y_coord };
 			}
 		}
 	}
@@ -144,6 +152,15 @@ struct Pacman {
 			to_move = true;
 			move_to = "right";
 		}
+	}
+
+	auto getCoord() -> std::pair<int, int> {
+		return position;
+	}
+
+	auto die() {
+		// handle death.
+		std::cout << "Pacman death\n.";
 	}
 
 private:

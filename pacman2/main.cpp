@@ -7,6 +7,7 @@
 
 #include "Pacman.hpp"
 #include "Map.hpp"
+#include "Blinky.hpp"
 
 int main()
 {
@@ -17,6 +18,11 @@ int main()
     sf::Texture PacmanTexture;
     PacmanTexture.loadFromFile("./Pacman.png");
     Pacman p(PacmanTexture);
+
+    // initialize blinky class
+    sf::Texture BlinkyTexture;
+    BlinkyTexture.loadFromFile("./EnemyA.png");
+    Blinky b(BlinkyTexture, {13, 13});
 
     sf::Texture wall; wall.loadFromFile("./Wall.png");
     sf::Texture blank; blank.loadFromFile("./BlankCell.png");
@@ -75,15 +81,17 @@ int main()
         if (std::chrono::system_clock::now() - last > update_interval) {
             p.update(m.get_map());
             last = std::chrono::system_clock::now();
-      
         }
 
-        //window.clear();
+        b.update(p);
+
+        window.clear();
 
         // print the pacman sprite
         //window.draw(test);
         m.draw(window);
         p.draw(window);
+        b.draw(window);
         
 
         window.display();
