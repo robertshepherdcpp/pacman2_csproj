@@ -3,7 +3,9 @@
 #include<SFML/Graphics.hpp>
 
 #include<iostream>
+
 #include<queue>
+#include<map>
 
 #include "Pacman.hpp"
 #include "Map.hpp"
@@ -14,6 +16,43 @@ inline auto shortest_path(Map& m, std::pair<int, int> start, std::pair<int, int>
 	// need to calculate the shortest path between 2 points, and then return the list of moves that got to that position.
 	// will do using bfs.
 	std::vector<std::vector<char>> copy = *m.get_map();
+
+	std::queue<std::pair<int, int>> q;
+	q.push(start);
+
+	std::map<std::pair<int, int>, bool> visited{};
+	std::map<std::pair<int, int>, std::pair<int, int>> parent{};
+
+	std::vector<std::pair<int, int>> dirs{ {-1, 0},{1, 0},{0, -1},{0, 1} };
+
+	visited[start] = true;
+
+	while (!q.empty()) {
+		auto value = q.front();
+		q.pop();
+
+		if (value == to) {
+			break;
+		}
+
+		auto prev = value;
+
+		for (auto d : dirs) {
+			value = { prev.first + d.first, prev.second + d.second };
+			if (copy[value.first][value.second] != '#') {
+				parent[value] = prev;
+				visited[value] = true;
+				q.push(value);
+			}
+		}
+	}
+
+	// we have got to our value now we need to retrace
+	std::vector<std::pair<int, int>> moves{};
+	auto curr = to;
+	while (curr != from) {
+
+	}
 
 
 	return res;
