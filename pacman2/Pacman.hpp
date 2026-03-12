@@ -95,14 +95,12 @@ struct Pacman {
 				// then nothing, we just move.
 				pm_sp.setPosition(pos);
 			}
-			else if (val == 'A' or val == 'B' or val == 'C' or val == 'D') {
+			else if (val == 'A' or val == 'B' or val == 'C' or val == 'D' or val == 'P') {
 				// then we have hit a ghost.
 				// TODO actually do something with the collision with the ghost.
 				pm_sp.setPosition(pos);
 			}
 		}
-
-
 	}
 
 	auto move_up() {  
