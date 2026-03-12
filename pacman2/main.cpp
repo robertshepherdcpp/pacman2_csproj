@@ -83,7 +83,7 @@ int main()
             last = std::chrono::system_clock::now();
         }
 
-        b.update(p);
+        b.update(p, m);
 
         window.clear();
 
