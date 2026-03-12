@@ -46,6 +46,7 @@ struct Map {
                     temp.push_back(' ');
                 }
             }
+            std::cout << "temp.size(): " << temp.size() << "\n";
             vec.push_back(temp);
         }
         std::cout << "printing the grid:\n";

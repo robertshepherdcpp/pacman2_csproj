@@ -34,20 +34,22 @@ struct Pacman {
 		pos.y += float(dir.second);
 
 		// if the position is out of bounds
-		if (pos.x < 0 or pos.x > 640) {
+		if (pos.x < 0 or pos.x > 600) {
 			// then we would make the pacman go to the other side
 			if (pos.x < 0) {
-				pos.x = 640;
+				pos.x = 600;
 			}
-			if (pos.x > 640) {
+			if (pos.x > 600) {
 				pos.x = 0;
 			}
 			pm_sp.setPosition(pos);
 		}
 		else { // the position is in bounds.
-			char val = (*vec)[int(pos.x / 20)][int(pos.y / 20)];
+			//std::cout << "attempting to access position: " << int(pos.x / 20) << ", " << int(pos.y / 20) << "\n";
+			char val = (*vec)[int(pos.y / 20)][int(pos.x / 20)];
 			if (val == '#') {
 				// then we cant move anymore we just stay as is.
+				pm_sp.setPosition(pos);
 			}
 			else if (val == '.') {
 				// then we have got to consume this token. we still move the player
