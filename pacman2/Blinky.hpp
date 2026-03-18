@@ -11,11 +11,12 @@
 #include "Map.hpp"
 
 inline auto shortest_path(Map& m, std::pair<int, int> start, std::pair<int, int> to) {
+	std::cout << "entering the shortest_path function\n";
 	std::vector<std::pair<int, int>> res{};
 
 	// need to calculate the shortest path between 2 points, and then return the list of moves that got to that position.
 	// will do using bfs.
-	std::vector<std::vector<char>> copy = *m.get_map();
+	/*std::vector<std::vector<char>> copy = *m.get_map();
 
 	std::queue<std::pair<int, int>> q;
 	q.push(start);
@@ -27,36 +28,39 @@ inline auto shortest_path(Map& m, std::pair<int, int> start, std::pair<int, int>
 
 	visited[start] = true;
 
-	while (!q.empty()) {
-		auto value = q.front();
-		q.pop();
+	std::cout << "starting the main whie loop of the function\n";*/
 
-		if (value == to) {
-			break;
-		}
+	//while (!q.empty()) {
+	//	auto value = q.front();
+	//	q.pop();
 
-		auto prev = value;
+	//	if (value == to) {
+	//		break;
+	//	}
 
-		for (auto d : dirs) {
-			value = { prev.first + d.first, prev.second + d.second };
-			if (copy[value.first][value.second] != '#') {
-				parent[value] = prev;
-				visited[value] = true;
-				q.push(value);
-			}
-		}
-	}
+	//	auto prev = value;
 
-	// we have got to our value now we need to retrace
-	std::vector<std::pair<int, int>> moves{to};
-	auto curr = to;
-	while (curr != start) {
-		curr = parent[curr];
-		moves.push_back(curr);
-	}
-	std::reverse(moves.begin(), moves.end());
+	//	for (auto d : dirs) {
+	//		value = { prev.first + d.first, prev.second + d.second };
+	//		std::cout << "checking area:" << value.first << ", " << value.second << "\n";
+	//		if (value.first >= 0 and value.first < copy.size() and value.second >= 0 and value.second < copy[0].size() and copy[value.first][value.second] != '#' and visited[value] == false) {
+	//			parent[value] = prev;
+	//			visited[value] = true;
+	//			q.push(value);
+	//		}
+	//	}
+	//}
 
-	res = moves;
+	//// we have got to our value now we need to retrace
+	//std::vector<std::pair<int, int>> moves{to};
+	//auto curr = to;
+	//while (curr != start) {
+	//	curr = parent[curr];
+	//	moves.push_back(curr);
+	//}
+	//std::reverse(moves.begin(), moves.end());
+
+	//res = moves;
 
 	return res;
 }
