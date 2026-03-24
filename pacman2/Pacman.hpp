@@ -8,8 +8,10 @@
 #include<string>
 
 struct Pacman {
-	Pacman(sf::Texture& pc_tx) : pm_sp(pc_tx) {
+	Pacman(sf::Texture& pc_tx, int m_energy_count, sf::Texture& left, sf::Texture& down, sf::Texture& up) : pm_sp(pc_tx) {
 		pm_sp.setPosition(sf::Vector2f(240, 240));
+		energy_count = m_energy_count;
+		m_right = pc_tx; m_left = left; m_down = down; m_up = up;
 	}
 
 	auto draw(sf::RenderWindow& rw) {
@@ -17,6 +19,10 @@ struct Pacman {
 	}
 
 	auto update(std::vector<std::vector<char>>* vec) {
+		if (energy_count == 0) {
+			std::cout << "you have won.\n";
+			energy_count = -1;
+		}
 		//std::cout << pm_sp.getPosition().x << ", " << pm_sp.getPosition().y << "\n";
 		if ((int(pm_sp.getPosition().x) % 20 == 0) and (int(pm_sp.getPosition().y) % 20 == 0)) {
 			auto cpy = dir;
@@ -86,6 +92,7 @@ struct Pacman {
 				// then we have got to consume this token. we still move the player
 				score += 1;
 				(*vec)[y_coord][x_coord] = ' ';
+				energy_count -= 1;
 
 				pm_sp.setPosition(pos);
 				position = { x_coord, y_coord };
@@ -94,6 +101,7 @@ struct Pacman {
 				// then we have a special token - the one that allows to ghosts to become edible. we still move the player
 				score += 10;
 				(*vec)[y_coord][x_coord] = ' ';
+				energy_count -= 1;
 
 				// TODO: actually handle eating it, like change the ghost's state.
 
@@ -124,6 +132,7 @@ struct Pacman {
 		else {
 			to_move = true;
 			move_to = "up";
+			pm_sp.setTexture(m_up);
 		}
 	}
 	auto move_down() { 
@@ -133,6 +142,7 @@ struct Pacman {
 		else {
 			to_move = true;
 			move_to = "down";
+			pm_sp.setTexture(m_down);
 		}
 	}
 	auto move_left() { 
@@ -142,6 +152,7 @@ struct Pacman {
 		else {
 			to_move = true;
 			move_to = "left";
+			pm_sp.setTexture(m_left);
 		}
 	}
 	auto move_right() { 
@@ -151,6 +162,7 @@ struct Pacman {
 		else {
 			to_move = true;
 			move_to = "right";
+			pm_sp.setTexture(m_right);
 		}
 	}
 
@@ -181,4 +193,7 @@ private:
 	std::pair<int, int> position{12, 12};
 
 	int score = 0;
+	int energy_count = 0;
+
+	sf::Texture m_left; sf::Texture m_right; sf::Texture m_down; sf::Texture m_up;
 };

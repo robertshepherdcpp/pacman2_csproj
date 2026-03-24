@@ -14,22 +14,28 @@ int main()
     // initialize the window - with dimensions to match the grid size
     sf::RenderWindow window(sf::VideoMode({ 660, 580 }), "Pacman");
 
-    // initialize the pacman class
-    sf::Texture PacmanTexture;
-    PacmanTexture.loadFromFile("./Pacman.png");
-    Pacman p(PacmanTexture);
-
-    // initialize blinky class
-    sf::Texture BlinkyTexture;
-    BlinkyTexture.loadFromFile("./EnemyA.png");
-    Blinky b(BlinkyTexture, {13, 13});
-
     sf::Texture wall; wall.loadFromFile("./Wall.png");
     sf::Texture blank; blank.loadFromFile("./BlankCell.png");
     sf::Texture energy; energy.loadFromFile("./Energy.png");
     sf::Texture special_token; special_token.loadFromFile("./ExtraEnergy.png");
 
     Map m("./grid.txt", wall, blank, energy, special_token);
+
+    // initialize the pacman class
+    sf::Texture PacmanTextureRight;
+    PacmanTextureRight.loadFromFile("./Pacman.png");
+    sf::Texture PacmanTextureLeft;
+    PacmanTextureLeft.loadFromFile("./PacmanLeft.png");
+    sf::Texture PacmanTextureDown;
+    PacmanTextureDown.loadFromFile("./PacmanDown.png");
+    sf::Texture PacmanTextureUp;
+    PacmanTextureUp.loadFromFile("./PacmanUp.png");
+    Pacman p(PacmanTextureRight, m.getEnergyCount(), PacmanTextureLeft, PacmanTextureDown, PacmanTextureUp);
+
+    // initialize blinky class
+    sf::Texture BlinkyTexture;
+    BlinkyTexture.loadFromFile("./EnemyA.png");
+    Blinky b(BlinkyTexture, {13, 13});
 
     sf::Sprite test(wall); test.setPosition(sf::Vector2f(20, 20));
 
@@ -83,7 +89,7 @@ int main()
             last = std::chrono::system_clock::now();
         }
 
-        b.update(p, m);
+        //b.update(p, m);
 
         window.clear();
 

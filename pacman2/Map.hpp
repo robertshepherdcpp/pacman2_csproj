@@ -39,6 +39,9 @@ struct Map {
         for (int i = 0; i < lines.size(); i++) {
             std::vector<char> temp{};
             for (auto j : lines[i]) {
+                if (j == 'o' or j == '.') {
+                    energy_count += 1;
+                }
                 temp.push_back(j);
             }
             if (lines[i].size() < largest) {
@@ -64,6 +67,10 @@ struct Map {
 
     auto get_map() -> std::vector<std::vector<char>>* {
         return &m_grid;
+    }
+
+    auto getEnergyCount() const -> int {
+        return energy_count;
     }
 
     // to draw the sprites of the grid. here we wont be drawing pacman and the ghosts though, they will act on their own.
@@ -121,4 +128,6 @@ private:
     sf::Sprite wall;
     sf::Sprite energy;
     sf::Sprite special_token;
+
+    int energy_count = 0;
 };
