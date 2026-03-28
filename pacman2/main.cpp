@@ -41,6 +41,7 @@ int main()
 
     // the last time point, so we can use it for updates.
     std::chrono::system_clock::time_point last = std::chrono::system_clock::now();
+    std::chrono::system_clock::time_point last_blinky = std::chrono::system_clock::now();
 
     // after how many seconds do we update the characters i.e. move them (every 0.1 seconds)
     auto update_interval = std::chrono::milliseconds(10);
@@ -49,6 +50,8 @@ int main()
     //int count = 0;
 
     // the main game loop
+
+    // FOR SOME REASON, WHEN I TRY RUN THE PROGRAM, THE PROGRAM IS ONLY RUNNING AND OLD VERSION, ITS LIKE AN OLD VERSION OF THE CODE HAS BEEN SAVED.
     while (window.isOpen())
     {
         while (const std::optional event = window.pollEvent())
@@ -88,8 +91,10 @@ int main()
             p.update(m.get_map());
             last = std::chrono::system_clock::now();
         }
-
-        //b.update(p, m);
+        if (std::chrono::system_clock::now() - last_blinky > update_interval) {
+            b.update(p, m);
+            last_blinky = std::chrono::system_clock::now();
+        }
 
         window.clear();
 

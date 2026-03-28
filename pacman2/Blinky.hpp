@@ -11,26 +11,45 @@
 #include "Map.hpp"
 
 inline auto shortest_path(Map& m, std::pair<int, int> start, std::pair<int, int> to) {
-	std::cout << "entering the shortest_path function\n";
+	// for now i will just make blinky go on a random path.
 	std::vector<std::pair<int, int>> res{};
 
-	// need to calculate the shortest path between 2 points, and then return the list of moves that got to that position.
-	// will do using bfs.
-	/*std::vector<std::vector<char>> copy = *m.get_map();
-
-	std::queue<std::pair<int, int>> q;
-	q.push(start);
-
-	std::map<std::pair<int, int>, bool> visited{};
-	std::map<std::pair<int, int>, std::pair<int, int>> parent{};
-
 	std::vector<std::pair<int, int>> dirs{ {-1, 0},{1, 0},{0, -1},{0, 1} };
+	int x = -1;
+	// continue the loop whilst x == -1 or whilst the thing is a block, i may have got the logic completely wrong here.
+	while (x == -1 or (start.first + dirs[x].first < 0) or (start.first + dirs[x].first) >= m.get_map()->size()  or
+		  (start.second + dirs[x].second) < 0 or (start.second + dirs[x].second) >= m.get_map()->at(0).size() or
+		   m.get_map()->at(start.first + dirs[x].first).at(start.second + dirs[x].second) == '#') {
+		x = rand() % 3;
+	}
+	auto direction = dirs[x];
 
-	visited[start] = true;
+	return direction;
+	//std::cout << "entering the shortest_path function\n";
+	//std::vector<std::pair<int, int>> res{};
 
-	std::cout << "starting the main whie loop of the function\n";*/
+	//// need to calculate the shortest path between 2 points, and then return the list of moves that got to that position.
+	//// will do using bfs.
+	//std::vector<std::vector<char>> copy = *m.get_map();
 
+	//std::queue<std::pair<int, int>> q;
+	//q.push(start);
+
+	//std::map<std::pair<int, int>, bool> visited{};
+	//std::map<std::pair<int, int>, std::pair<int, int>> parent{};
+
+	//std::vector<std::pair<int, int>> dirs{ {-1, 0},{1, 0},{0, -1},{0, 1} };
+
+	//visited[start] = true;
+
+	//std::cout << "starting the main whie loop of the function\n";
+
+	//// for debugging purposes.
+	//int i = 0;
 	//while (!q.empty()) {
+	//	std::cout << "queue iteration: " << i << "\n";
+	//	i++;
+
 	//	auto value = q.front();
 	//	q.pop();
 
@@ -51,18 +70,28 @@ inline auto shortest_path(Map& m, std::pair<int, int> start, std::pair<int, int>
 	//	}
 	//}
 
+	//std::cout << "broken out of the while loop.\n";
+
 	//// we have got to our value now we need to retrace
+	//// whats wrong with initializing this vector???
 	//std::vector<std::pair<int, int>> moves{to};
+	//std::cout << "after initializing the vector!";
 	//auto curr = to;
+	//std::cout << "just before the second while loop\n";
 	//while (curr != start) {
+	//	std::cout << "in the second loop of the update function\n";
 	//	curr = parent[curr];
 	//	moves.push_back(curr);
+	//	// for some reason it seems like we are getting an infinite loop here...
+	//	std::cout << "going back in the loop\n";
 	//}
 	//std::reverse(moves.begin(), moves.end());
 
 	//res = moves;
 
-	return res;
+	//std::cout << "going out of the update() function\n";
+
+	//return res;
 }
 
 // Blinky directly targets the pacman
@@ -74,11 +103,17 @@ struct Blinky {
 		// just testing code
 		auto pacman_pos = p.getCoord();
 		std::cout << "finding shortest path.\n";
-		std::vector<std::pair<int, int>> vec = shortest_path(m, position, pacman_pos);
-		// now we print the shortest path
-		for (int i = 0; i < vec.size(); i++) {
-			std::cout << i << ": " << vec[i].first << ", " << vec[i].second << "\n";
-		}
+		// temporary random path code, so that it just has random movement.
+		auto x = shortest_path(m, position, pacman_pos);
+		bl_sp.move(sf::Vector2f(float(x.first), float(x.second)));
+
+
+		// TODO comment back out later...., when the shortest_path function has been compoleted
+		//std::vector<std::pair<int, int>> vec = shortest_path(m, position, pacman_pos);
+		//// now we print the shortest path
+		//for (int i = 0; i < vec.size(); i++) {
+		//	std::cout << i << ": " << vec[i].first << ", " << vec[i].second << "\n";
+		//}
 		
 		// the ret of the code (the original written code)
 		//// the position of the pacman
